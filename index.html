@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chinni Music Player 💕</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="player-container">
+
+  <!-- LEFT SECTION -->
+  <div class="left-section">
+
+    <img src="Gaaju.png" class="album" id="album">
+
+    <div id="currentLine" class="current-line">
+      Press Play 🎵
+    </div>
+
+    <div class="song-info">
+      <h1>Gaaju Bomma 💕</h1>
+      <p>Hi Nanna✨</p>
+    </div>
+
+    <input type="range" id="progress" value="0">
+
+    <div class="controls">
+      <button id="prevBtn" class="control-btn">⏮</button>
+      <button id="playBtn" class="play-btn">▶</button>
+      <button id="nextBtn" class="control-btn">⏭</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SECTION -->
+  <div class="right-section"></div>
+
+  <audio id="song"></audio>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+ 
