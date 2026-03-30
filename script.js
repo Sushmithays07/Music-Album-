@@ -348,7 +348,7 @@ alert(song + " added to favorites ❤️");
 
 }
 
-/* LOAD FAVORITES ON HOME PAGE */
+/* LOAD FAVORITES ON index PAGE */
 
 /*function loadFavorites(){
 

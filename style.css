@@ -181,9 +181,9 @@ body {
   font-size: 22px;
 }
 
-/* ================= HOME PAGE ================= */
+/* ================= index PAGE ================= */
 
-.home-wrapper{
+.index-wrapper{
   text-align:center;
   padding:60px 20px;
 }
@@ -191,7 +191,7 @@ body {
 /* Title */
 
 
-.home-title{
+.index-title{
   font-family:'Playfair Display', serif;
   font-size:42px;
   margin-bottom:10px;
@@ -200,7 +200,7 @@ body {
 
 /* Welcome text */
 
-.home-text{
+.index-text{
 font-family: 'Playfair Display', serif;
 font-size:18px;
 color:#3b2f5a;
@@ -262,7 +262,7 @@ letter-spacing:0.5px;
 
 /* Footer */
 
-.home-footer{
+.index-footer{
   margin-top:60px;
   text-align:center;
   font-size:14px;
