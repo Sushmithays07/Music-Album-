@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chinni Raagam</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<script src="script.js"></script>
+<body>
+
+<div class="home-wrapper">
+
+<h1 class="home-title">Chinni Raagam ✨🎼 </h1>
+<div class="search-box">
+
+
+
+<input 
+type="text"
+id="searchInput"
+placeholder="Search albums or songs... "
+
+onkeyup="searchMusic()"
+>
+<button onclick="searchMusic()" class="search-btn">🔍</button>
+
+
+</div>
+
+<div id="searchResults"></div>
+
+<div class="login-box">
+
+<input type="text" id="username"placeholder="Enter your name"> 
+
+<button onclick="loginUser()">Login</button>
+
+<p id="welcomeUser"></p>
+
+</div>
+
+<p class="home-text">
+Welcome to Chinni Raagam <br>
+Press play and let the music take over.
+</p>
+
+<div class="album-grid">
+
+<div class="album-card" onclick="location.href='album.html?album=HiNanna'">
+<div class="album-img">
+<img src="Gaaju.png">
+<div class="play-icon">▶</div>
+</div>
+<p>Hi Nanna</p>
+</div>
+
+<div class="album-card" onclick="location.href='album.html?album=melodies'">
+<div class="album-img">
+<img src="melodies.png">
+<div class="play-icon">▶</div>
+</div>
+<p>Melodies</p>
+</div>
+
+<div class="album-card" onclick="location.href='album.html?album=sad'">
+<div class="album-img">
+<img src="melody of pain.png">
+<div class="play-icon">▶</div>
+</div>
+<p>Melodies of pain</p>
+</div>
+
+<div class="album-card" onclick="location.href='album.html?album=soul'">
+<div class="album-img">
+<img src="90's soul.png">
+<div class="play-icon">▶</div>
+</div>
+<p>90's Soul</p>
+</div>
+
+<div class="album-card" onclick="location.href='album.html?album=beats'">
+<div class="album-img">
+<img src="Beats.png">
+<div class="play-icon">▶</div>
+</div>
+<p>Beats</p>
+</div>
+
+<div class="album-card" onclick="location.href='album.html?album=motivation'">
+<div class="album-img">
+<img src="motivation.png">
+<div class="play-icon">▶</div>
+</div>
+<p>Motivation</p>
+</div>
+<!-- Album 7 -->
+<div class="album-card" onclick="location.href='album.html?album=devotional'">
+
+<div class="album-img">
+<img src="devotional.png">
+<div class="play-icon">▶</div>
+</div>
+
+<p>Devotional</p>
+
+</div>
+
+<!-- Album 8 -->
+<div class="album-card" onclick="location.href='album.html?album=friendship'">
+
+<div class="album-img">
+<img src="Bonds.png">
+<div class="play-icon">▶</div>
+</div>
+
+<p>Bond</p>
+
+</div>
+
+<!-- Album 9 -->
+<div class="album-card" onclick="location.href='album.html?album=family'">
+
+<div class="album-img">
+<img src="Memories.png">
+<div class="play-icon">▶</div>
+</div>
+
+<p>Memories</p>
+
+</div>
+
+<h2>Recently Played 🎧</h2>
+
+<div id="recentList"></div>
+
+<h2>Your Favorites ❤️</h2>
+
+<div id="favoriteList"></div>
+
+</div>
+
+<footer class="home-footer">
+© 2026 Chinni Raagam | Where Every Song Tells a Story
+</footer>
+
+</div>
+
+<script>
+
+const musicData = {
+
+HiNanna:["Gaaju Bomma","Oo Chedhu Nijam","Ammaadi"],
+melodies:["Melody Song 1","Melody Song 2"],
+sad:["Sad Song 1"],
+soul:["Soul Song 1"],
+beats:["Beat Song 1"],
+motivation:["Motivation Song 1"],
+devotional:["Devotional Song 1"],
+friendship:["Friendship Song 1"],
+family:["Family Song 1"]
+
+};
+
+function searchMusic(){
+
+let input=document.getElementById("searchInput").value.toLowerCase();
+let results=document.getElementById("searchResults");
+
+results.innerHTML="";
+
+if(input==="") return;
+
+for(let album in musicData){
+
+musicData[album].forEach(song=>{
+
+if(song.toLowerCase().includes(input)){
+
+let div=document.createElement("div");
+
+div.className="result-item";
+div.innerText=song+" ("+album+")";
+
+div.onclick=function(){
+window.location.href="album.html?album="+album;
+};
+
+results.appendChild(div);
+
+}
+
+});
+
+}
+
+}
+
+
+
+/* LOGIN */
+
+function loginUser(){
+
+let name=document.getElementById("username").value;
+
+if(name===""){
+alert("Enter name");
+return;
+}
+
+localStorage.setItem("user",name);
+
+document.getElementById("welcomeUser").innerText="Welcome "+name+" 👋";
+
+loadFavorites();
+
+}
+
+
+
+
+window.onload=function(){
+
+let user=localStorage.getItem("user");
+
+if(user){
+document.getElementById("welcomeUser").innerText="Welcome "+user+" 🤗";
+loadFavorites();
+}
+
+};
+function loadRecent(){
+
+let recent = JSON.parse(localStorage.getItem("recentSongs")) || [];
+
+let container = document.getElementById("recentList");
+
+if(!container) return;
+
+container.innerHTML="";
+
+recent.forEach(song=>{
+
+let div=document.createElement("div");
+
+div.innerText="🎵 "+song;
+
+container.appendChild(div);
+
+});
+
+}
+
+loadRecent();
+
+
+
+</script>
+</body>
+</html>

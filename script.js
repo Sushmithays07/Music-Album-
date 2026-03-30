@@ -1,191 +1,460 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  const audio = document.getElementById("song");
-  const playBtn = document.getElementById("playBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const prevBtn = document.getElementById("prevBtn");
-  const progress = document.getElementById("progress");
-  const title = document.querySelector(".song-info h1");
-  const album = document.getElementById("album");
-  const lyricsContainer = document.querySelector(".right-section");
-  const currentLine = document.getElementById("currentLine");
+const audio = document.getElementById("song");
+const playBtn = document.getElementById("playBtn");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const progress = document.getElementById("progress");
+const title = document.getElementById("songTitle");
+const album = document.getElementById("album");
+const lyricsContainer = document.querySelector(".lyrics-container");
+const currentLine = document.getElementById("currentLine");
+const albumNameText = document.getElementById("albumName");
 
-  const songs = [
+const params = new URLSearchParams(window.location.search);
+const albumKey = params.get("album") || "hiNanna";
 
-    {
-      name: "Gaaju Bomma 💕",
-      file: "Gajjubomma.mp3",
-      image: "Gaaju.png",
-      lyrics: [
-        { time: 1, text: "Itu raave naa gaajubomma.." },
-        { time: 6, text: "nene nanna amma.." },
-        { time: 10, text: "yeda neeku uyyala komma.." },
-        { time: 14, text: "ninnupe cheyye prema.." },
-        { time: 19, text: "valipo....." },
-        { time: 22, text: "Ee gundepaine.." },
-        { time: 27, text: "aduko...." },
-        { time: 31, text: "Ee gutilone.." },
-        { time: 38, text: "dooram pobokuma..." }
-      ]
-    },
+const albums = {
 
-    {
-      name: "Oo Chedhu Nijam 🎶",
-      file: "chedunijam.mp3",
-      image: "chedhunijam.png",
-      lyrics: [
-        { time: 1, text: "🎶" }, 
-        { time: 10, text: "Swapnaalanni kalla munde karigenilaa.." }, 
-        { time: 15, text: "Ayinaa edho Aasha Needhigaa.." }, 
-        { time: 20, text: "evaindho Ee prema putte Okkasaariga.." }, 
-        { time: 26, text: "Endhukante Cheppalevugaa..." }, 
-        { time: 30, text: "Edhedho Oohichaava.." }, 
-        { time: 32, text: "Praanamgaa Preminchaava.." }, 
-        { time: 35, text: "Haa Ye ye..." }, 
-        { time: 36, text: "Gunde patti laage" }, 
-        { time: 38, text: "Gunde patti laage" }, 
-        { time: 41, text: "Enaadu choodandhi Ee bhadhe.." }, 
-        { time: 43, text: "..." }, { time: 45, text: "Oo chedhu Nijam" }, 
-        { time: 48, text: "Ventaade Gatham" }, 
-        { time: 50, text: "Mana kalalani dhoorame chesenu chesenu," }, 
-        { time: 56, text: "Chedhu nijam " }, 
-        { time: 58, text: "Gaayaala gatham" }, 
-        { time: 61, text: "mana premani dhoorame" }, 
-        { time: 65, text: "chessenugaa.." }, 
-        { time: 66, text: "🎶" }
-      ]
-    },
+HiNanna:[
 
-    {
-      name: "Ammaadi❤️🎼",
-      file: "ammaadi.mp3",
-      image: "ammadi.png",
-      lyrics: [
-        
-        { time: 3, text: "ha ha haaa aa aa" },
-        { time: 7, text: "pranam alladi podha Ammadi" },
-        { time: 12, text: "Andham kattesukunte ammadi" },
-        { time: 17, text: "inka kallone unna ammadi" },
-        { time: 23, text: "Ee mate antu untu rojantha" },
-        { time: 27, text: "nannodhaladuga" },
-        { time: 30, text: "hey mudhu mudhu mudhantune" },
-        { time: 33, text: "mudhosthadem" },
-        { time: 35, text: "hey ha" },
-        { time: 36, text: "kale nene thakadhantu" },
-        { time: 39, text: "mudhosthadem" },
-        { time: 40, text: "hey ha" },
-        { time: 41, text: "uppu mota ethesthune " },
-        { time: 44, text: "mudhosthade..." },
-        { time: 47, text: "kopam lonu" },
-        { time: 49, text: "mudhosthade" },
-        { time: 52, text: "🎶" }
+{
+name:"Gaaju Bomma 💕",
+file:"Gajjubomma.mp3",
+image:"Gaaju.png",
+lyrics:[
+{time:1,text:"Itu raave naa gaajubomma.."},
+{time:6,text:"nene nanna amma.."},
+{time:10,text:"yeda neeku uyyala komma.."},
+{time:14,text:"ninnupe cheyye prema.."}
+]
+},
 
-        
-      ]
-    }
+{
+name:"Oo Chedhu Nijam 🎶",
+file:"chedunijam.mp3",
+image:"chedhunijam.png",
+lyrics:[
+{time:10,text:"Swapnaalanni kalla munde karigenilaa.."},
+{time:15,text:"Ayinaa edho Aasha Needhigaa.."},
+{time:20,text:"evaindho Ee prema putte Okkasaariga.."}
+]
+}
 
-  ];
+],
 
-  let songIndex = 0;
+melodies:[
 
-  function loadSong(index) {
+{
+name:"Melody Song 1",
+file:"melody1.mp3",
+image:"melody1.png",
+lyrics:[
+{time:2,text:"Melody lyric line 1"},
+{time:7,text:"Melody lyric line 2"},
+{time:12,text:"Melody lyric line 3"}
+]
+}
 
-    const song = songs[index];
+],
 
-    audio.src = song.file;
-    title.textContent = song.name;
-    album.src = song.image;
+sad:[
 
-    lyricsContainer.innerHTML = "";
+{
+name:"Sad Song 1",
+file:"sad1.mp3",
+image:"sad1.png",
+lyrics:[
+{time:3,text:"Sad lyric line 1"},
+{time:8,text:"Sad lyric line 2"},
+{time:13,text:"Sad lyric line 3"}
+]
+}
 
-    song.lyrics.forEach(line => {
-      const p = document.createElement("p");
-      p.dataset.time = line.time;
-      p.textContent = line.text;
-      lyricsContainer.appendChild(p);
-    });
+],
 
-    progress.value = 0;
-    currentLine.textContent = "Press Play 🎵";
-  }
+soul:[
 
-  /* PLAY / PAUSE */
-  playBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      playBtn.textContent = "❚❚";
-    } else {
-      audio.pause();
-      playBtn.textContent = "▶";
-    }
-  });
+{
+name:"Soul Song 1",
+file:"soul1.mp3",
+image:"soul1.png",
+lyrics:[
+{time:4,text:"Soul lyric line 1"},
+{time:9,text:"Soul lyric line 2"},
+{time:14,text:"Soul lyric line 3"}
+]
+}
 
-  /* NEXT */
-  nextBtn.addEventListener("click", () => {
-    songIndex = (songIndex + 1) % songs.length;
-    loadSong(songIndex);
-    audio.play();
-    playBtn.textContent = "❚❚";
-    });
-    
-  /* AUTO PLAY NEXT WHEN SONG ENDS */
-  audio.addEventListener("ended", () => {
-  songIndex = (songIndex + 1) % songs.length;
-  loadSong(songIndex);
-  audio.play();
-  playBtn.textContent = "❚❚";
-  });
-  
+],
 
-  /* PREVIOUS */
-  prevBtn.addEventListener("click", () => {
-    songIndex = (songIndex - 1 + songs.length) % songs.length;
-    loadSong(songIndex);
-    audio.play();
-    playBtn.textContent = "❚❚";
-  });
+beats:[
 
-  /* AUTO SCROLL + PROGRESS */
-  audio.addEventListener("timeupdate", () => {
+{
+name:"Beat Song 1",
+file:"beat1.mp3",
+image:"beat1.png",
+lyrics:[
+{time:1,text:"Beat lyric line 1"},
+{time:6,text:"Beat lyric line 2"},
+{time:11,text:"Beat lyric line 3"}
+]
+}
 
-    if (!audio.duration) return;
+],
 
-    progress.value = (audio.currentTime / audio.duration) * 100;
+motivation:[
 
-    const lines = document.querySelectorAll(".right-section p");
+{
+name:"Motivation Song 1",
+file:"motivation1.mp3",
+image:"motivation1.png",
+lyrics:[
+{time:5,text:"Motivation lyric line 1"},
+{time:10,text:"Motivation lyric line 2"},
+{time:15,text:"Motivation lyric line 3"}
+]
+}
 
-    lines.forEach((line, index) => {
+],
+ 
+devotional:[
 
-      const start = parseFloat(line.dataset.time);
-      const nextLine = lines[index + 1];
-      const end = nextLine ? parseFloat(nextLine.dataset.time) : audio.duration + 1;
+{
+name:"Devotional Song 1",
+file:"devotional1.mp3",
+image:"devotional1.png",
+lyrics:[
+{time:2,text:"Devotional lyric line 1"},
+{time:7,text:"Devotional lyric line 2"},
+{time:12,text:"Devotional lyric line 3"}
+]
+},
 
-      if (audio.currentTime >= start && audio.currentTime < end) {
+{
+name:"Devotional Song 2",
+file:"devotional2.mp3",
+image:"devotional2.png",
+lyrics:[
+{time:4,text:"Devotional lyric line 1"},
+{time:9,text:"Devotional lyric line 2"},
+{time:14,text:"Devotional lyric line 3"}
+]
+}
 
-        line.classList.add("active");
-        currentLine.textContent = line.textContent;
+],
+friendship:[
 
-        const center = line.offsetTop - (lyricsContainer.clientHeight / 2) + (line.clientHeight / 2);
+{
+name:"Friendship Song 1",
+file:"friendship1.mp3",
+image:"friendship1.png",
+lyrics:[
+{time:3,text:"Friendship lyric line 1"},
+{time:8,text:"Friendship lyric line 2"},
+{time:13,text:"Friendship lyric line 3"}
+]
+},
 
-        lyricsContainer.scrollTo({
-          top: center,
-          behavior: "smooth"
-        });
+{
+name:"Friendship Song 2",
+file:"friendship2.mp3",
+image:"friendship2.png",
+lyrics:[
+{time:5,text:"Friendship lyric line 1"},
+{time:10,text:"Friendship lyric line 2"},
+{time:15,text:"Friendship lyric line 3"}
+]
+}
 
-      } else {
-        line.classList.remove("active");
-      }
+],
+family:[
 
-    });
+{
+name:"Family Song 1",
+file:"family1.mp3",
+image:"family1.png",
+lyrics:[
+{time:4,text:"Family lyric line 1"},
+{time:9,text:"Family lyric line 2"},
+{time:14,text:"Family lyric line 3"}
+]
+},
 
-  });
+{
+name:"Family Song 2",
+file:"family2.mp3",
+image:"family2.png",
+lyrics:[
+{time:6,text:"Family lyric line 1"},
+{time:11,text:"Family lyric line 2"},
+{time:16,text:"Family lyric line 3"}
+]
+}
 
-  /* SEEK */
-  progress.addEventListener("input", () => {
-    if (!audio.duration) return;
-    audio.currentTime = (progress.value / 100) * audio.duration;
-  });
+]
 
-  loadSong(songIndex);
+};
+
+const songs = albums[albumKey];
+albumNameText.textContent = albumKey;
+
+let songIndex = 0;
+
+function loadSong(index){
+
+const song = songs[index];
+
+audio.src = song.file;
+title.textContent = song.name;
+album.src = song.image;
+
+lyricsContainer.innerHTML="";
+currentLine.textContent="Press Play 🎵";
+progress.value=0;
+
+song.lyrics.forEach(line=>{
+
+const p=document.createElement("p");
+p.textContent=line.text;
+p.dataset.time=line.time;
+
+lyricsContainer.appendChild(p);
 
 });
+
+}
+
+playBtn.addEventListener("click",()=>{
+
+if(audio.paused){
+audio.play();
+playBtn.textContent="❚❚";
+}else{
+audio.pause();
+playBtn.textContent="▶";
+}
+
+});
+
+nextBtn.addEventListener("click",()=>{
+songIndex=(songIndex+1)%songs.length;
+loadSong(songIndex);
+audio.play();
+});
+
+prevBtn.addEventListener("click",()=>{
+songIndex=(songIndex-1+songs.length)%songs.length;
+loadSong(songIndex);
+audio.play();
+});
+
+audio.addEventListener("timeupdate",()=>{
+
+if(!audio.duration)return;
+
+progress.value=(audio.currentTime/audio.duration)*100;
+
+const lines=lyricsContainer.querySelectorAll("p");
+
+lines.forEach((line,index)=>{
+
+const start=parseFloat(line.dataset.time);
+const nextLine=lines[index+1];
+const end=nextLine?parseFloat(nextLine.dataset.time):audio.duration;
+
+if(audio.currentTime>=start && audio.currentTime<end){
+
+line.classList.add("active");
+currentLine.textContent=line.textContent;
+
+}else{
+
+line.classList.remove("active");
+
+}
+
+});
+
+});
+
+progress.addEventListener("input",()=>{
+
+if(!audio.duration)return;
+
+audio.currentTime=(progress.value/100)*audio.duration;
+
+});
+
+loadSong(songIndex);
+addRecent(song.name);
+
+});
+
+/* ===== FAVORITE SYSTEM ===== */
+
+/*function addFavorite(song){
+
+let user = localStorage.getItem("user");
+
+if(!user){
+alert("Please login first");
+return;
+}
+
+let key = user + "_favorites";
+
+let fav = JSON.parse(localStorage.getItem(key)) || [];
+
+if(!fav.includes(song)){
+fav.push(song);
+localStorage.setItem(key, JSON.stringify(fav));
+}
+
+alert(song + " added to favorites ❤️");
+
+}*/
+
+function addFavorite(song){
+
+if(!song || song === "undefined"){
+alert("Song not loaded yet");
+return;
+}
+
+let user = localStorage.getItem("user");
+
+if(!user){
+alert("Please login first");
+return;
+}
+
+let album = new URLSearchParams(window.location.search).get("album");
+
+let key = user + "_favorites";
+
+let fav = JSON.parse(localStorage.getItem(key)) || [];
+
+let favItem = {song:song, album:album};
+
+let exists = fav.some(item => item.song === song);
+
+if(!exists){
+fav.push(favItem);
+localStorage.setItem(key, JSON.stringify(fav));
+}
+
+alert(song + " added to favorites ❤️");
+
+}
+
+/* LOAD FAVORITES ON HOME PAGE */
+
+/*function loadFavorites(){
+
+let user = localStorage.getItem("user");
+
+if(!user) return;
+
+let key = user + "_favorites";
+
+let fav = JSON.parse(localStorage.getItem(key)) || [];
+
+let container = document.getElementById("favoriteList");
+
+if(!container) return;
+
+container.innerHTML="";
+
+fav.forEach(song=>{
+
+let div=document.createElement("div");
+div.innerText="❤️ "+song;
+
+container.appendChild(div);
+
+});
+
+}*/
+function loadFavorites(){
+
+let user = localStorage.getItem("user");
+
+if(!user) return;
+
+let key = user + "_favorites";
+
+let fav = JSON.parse(localStorage.getItem(key)) || [];
+
+let container = document.getElementById("favoriteList");
+
+container.innerHTML="";
+
+fav.forEach((item,index)=>{
+
+let div=document.createElement("div");
+div.className="fav-item";
+
+let song=document.createElement("span");
+song.innerText="❤️ "+item.song;
+song.style.cursor="pointer";
+
+/* OPEN SONG WHEN CLICKED */
+
+song.onclick=function(){
+window.location.href="album.html?album="+item.album;
+};
+
+/* REMOVE BUTTON */
+
+let remove=document.createElement("span");
+remove.innerText=" ❌";
+remove.style.cursor="pointer";
+
+remove.onclick=function(e){
+e.stopPropagation();
+removeFavorite(index);
+};
+
+div.appendChild(song);
+div.appendChild(remove);
+
+container.appendChild(div);
+
+});
+
+}
+//
+
+function removeFavorite(index){
+
+let user = localStorage.getItem("user");
+
+let key = user + "_favorites";
+
+let fav = JSON.parse(localStorage.getItem(key)) || [];
+
+fav.splice(index,1);
+
+localStorage.setItem(key,JSON.stringify(fav));
+
+loadFavorites();
+
+}
+function addRecent(song){
+
+if(!song || song === "null") return;
+
+let recent = JSON.parse(localStorage.getItem("recentSongs")) || [];
+
+recent = recent.filter(s => s !== song);
+
+recent.unshift(song);
+
+if(recent.length > 5){
+recent.pop();
+}
+
+localStorage.setItem("recentSongs", JSON.stringify(recent));
+
+}
