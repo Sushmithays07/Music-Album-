@@ -20,8 +20,8 @@ HiNanna:[
 
 {
 name:"Gaaju Bomma 💕",
-file:"Gajjubomma.mp3",
-image:"Gaaju.png",
+file:"images/audio/Gajjubomma.mp3",
+image:"images/Gaaju.png",
 lyrics:[
 {time:1,text:"Itu raave naa gaajubomma.."},
 {time:6,text:"nene nanna amma.."},
@@ -32,8 +32,8 @@ lyrics:[
 
 {
 name:"Oo Chedhu Nijam 🎶",
-file:"chedunijam.mp3",
-image:"chedhunijam.png",
+file:"images/audio/chedunijam.mp3",
+image:"images/chedhunijam.png",
 lyrics:[
 {time:10,text:"Swapnaalanni kalla munde karigenilaa.."},
 {time:15,text:"Ayinaa edho Aasha Needhigaa.."},
@@ -48,7 +48,7 @@ melodies:[
 {
 name:"Melody Song 1",
 file:"melody1.mp3",
-image:"melody1.png",
+image:"images/melody1.png",
 lyrics:[
 {time:2,text:"Melody lyric line 1"},
 {time:7,text:"Melody lyric line 2"},
